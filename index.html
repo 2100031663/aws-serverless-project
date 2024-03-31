@@ -1,0 +1,196 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Reservation</title>
+    <!-- Styling for the client UI -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: green;
+        }
+        label {
+            font-weight: bold;
+            color: green;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 4px;
+            background-color: green;
+            color: #fff;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            color: #333;
+        }
+         .container {
+            background-color: #f0f0f0; /* Light ash background color */
+            padding: 20px;
+        }
+
+        .book-container {
+            background-color: white; /* Background color for each book container */
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow effect */
+            margin-bottom: 20px;
+        }
+
+        .book-details {
+            padding: 20px;
+        }
+
+        .book-details img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px 5px 0 0; /* Rounded corners for the top of the image */
+        }
+
+        /* Style for book details */
+        .book-details p {
+            margin: 5px 0;
+        }
+
+        .book-details strong {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Buy Your Book</h1>
+
+        <!-- Book 1 -->
+        <div class="book-container">
+            <div class="book-details">
+                <img src="https://books.google.co.in/books/content?id=c3qmIZtWUjAC&pg=PA5&img=1&zoom=3&hl=en&bul=1&sig=ACfU3U0M-7L3elOSlyTroC2dMHlNTsU7XQ&w=1280" alt="Book 1">
+                <p><strong>Book Title:</strong> Avul Wings of Fire</p>
+                <p><strong>Author:</strong>Avul Pakir Jainulabdeen Abdul Kalam </p>
+                <p><strong>ISBN:</strong> 9788173711466, 8173711461</p>
+                <p><strong>Genre:</strong>Autobiography</p>
+                <p><strong>Year:</strong> 1999</p>
+            </div>
+        </div>
+
+        <!-- Book 2 -->
+        <div class="book-container">
+            <div class="book-details">
+                <img src="https://m.media-amazon.com/images/I/61o9kF7bacL._AC_UF1000,1000_QL80_.jpg" alt="Book 2">
+                <p><strong>Book Title:</strong> Gulliver's Travels</p>
+                <p><strong>Author:</strong> Jonathan Swift</p>
+                <p><strong>ISBN:</strong> 46984646846418</p>
+                <p><strong>Genre:</strong> Science Fiction</p>
+                <p><strong>Year:</strong> 2009</p>
+            </div>
+        </div>
+
+        <!-- Book 3 -->
+        <div class="book-container">
+            <div class="book-details">
+                <img src="https://cdn.penguin.co.uk/dam-assets/books/9781784870140/9781784870140-jacket-large.jpg" alt="Book 3">
+                <p><strong>Book Title:</strong> Wuthering Heights</p>
+                <p><strong>Author:</strong> Emily BrontÃ«</p>
+                <p><strong>ISBN:</strong> 4416416984496848</p>
+                <p><strong>Genre:</strong> Fiction</p>
+                <p><strong>Year:</strong> 1998</p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Buy Your Book</h1>
+        <label for="bookTitle">Book Title:</label>
+        <input type="text" name="bookTitle" id="bookTitle">
+        <label for="author">Author:</label>
+        <input type="text" name="author" id="author">
+        <label for="ISBN">ISBN:</label>
+        <input type="text" name="ISBN" id="ISBN">
+        <label for="genre">Genere:</label>
+        <input type="text" name="genre" id="genre">
+        <label for="year">Year:</label>
+        <input type="text" name="year" id="year">
+        <input type="submit" id="reserve" value="Book" onclick="reserveBook()">
+        <p id="reservationStatus"></p>
+        
+        <div id="reservationList">
+            <table id="reservationTable">
+                <thead>
+                    
+                </thead>
+                <tbody>
+                    <!-- Reservation list will be inserted here dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        function reserveBook() {
+            var bookTitle = document.getElementById("bookTitle").value;
+            var author = document.getElementById("author").value;
+            var ISBN = document.getElementById("ISBN").value;
+            var genre = document.getElementById("genre").value;
+            var year = document.getElementById("year").value;
+            var bookData = {
+                "bookTitle": bookTitle,
+                "author": author,
+                "ISBN": ISBN,
+                "genre": genre,
+                "year": year
+            };
+            fetch("invoke-url", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(bookData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("reservationStatus").innerText = data.body;
+                console.log(data);
+            })
+            .catch(error => {
+                document.getElementById("reservationStatus").innerText = "Reservation Failed: " + error.message;
+                console.error("Error:", error);
+            });
+        }
+    </script>
+</body></html>
+
